@@ -10,7 +10,8 @@ namespace Program
     {
         static void Main()
         {
-            char c1 = '\u0001';
+            int height = 25;
+            int width = 100;
             char[,] world = new char[25, 100];
             Random rnd = new Random();
 
@@ -52,7 +53,7 @@ namespace Program
                 {
                     for (int f = 0; f < 6; f++)
                     {
-                        world[cordY + j, cordX + f] = '#';
+                        world[cordY + j, cordX + f] = '▓';
                     }
                 }
             }

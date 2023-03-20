@@ -20,10 +20,18 @@ namespace Program
                 for (int x = 0; x < 100; x++)
                 {
                     //border
-                    if (y == 0 || y == 24 || x == 0 || x == 99)
-                    {
-                        world[y, x] = '#';
-                    }
+                    if (x == 0 && y>0 && y < 24|| x == 99 && y > 0 && y < 24)
+                        world[y, x] = '┃';
+                    else if (y == 0 && x > 0 && x < 99 || y == 24 && x > 0 && x < 99)
+                        world[y, x] = '━';
+                    else if(x == 0 && y == 0)
+                        world[y, x] = '┏';
+                    else if (x == 99 && y == 24)
+                        world[y, x] = '┛';
+                    else if (x == 0 && y == 24)
+                        world[y, x] = '┗';
+                    else if (x == 99 && y == 0)
+                        world[y, x] = '┓';
                     //bg
                     else
                     {
@@ -33,30 +41,12 @@ namespace Program
             }
 
             int cordX, cordY, Nroom;
-            //Nroom = rnd.Next(30, 34);
-
-            //for (int i = 0; i < Nroom; i++)
-            //{
-            //    cordX = rnd.Next(4, 92)-3;
-            //    cordY = rnd.Next(4, 22)-3;
-
-            //    for (int j = 0; j < 6; j++)
-            //    {
-            //        for (int f = 0; f < 11; f++)
-            //        {
-            //            if(j == 0 || f == 0 || f == 10 || j == 5)
-            //                world[cordY + j, cordX + f] = '#';
-            //            else
-            //                world[cordY + j, cordX + f] = ' ';
-            //        }
-            //    }
-            //}
 
             Nroom = rnd.Next(50, 55);
             for (int i = 0; i < Nroom; i++)
             {
-                cordX = rnd.Next(0, 94);
-                cordY = rnd.Next(0, 21);
+                cordX = rnd.Next(1, 94);
+                cordY = rnd.Next(1, 21);
 
                 for (int j = 0; j < 4; j++)
                 {
@@ -92,11 +82,6 @@ namespace Program
                     world[3 + j, 25] = ' ';
                 }
             }
-            world[17, 99] = '✘';
-            world[3, 0] = '[';
-
-
-
 
             //printing world
             for (int i=0; i<25; i++)

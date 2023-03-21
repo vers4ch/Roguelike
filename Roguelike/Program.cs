@@ -12,26 +12,26 @@ namespace Program
         {
             int height = 25;
             int width = 100;
-            char[,] world = new char[25, 100];
+            char[,] world = new char[height, width];
             Random rnd = new Random();
 
             //draw WORLD with
-            for (int y = 0; y < 25; y++)
+            for (int y = 0; y < height; y++)
             {
-                for (int x = 0; x < 100; x++)
+                for (int x = 0; x < width; x++)
                 {
                     //border
-                    if (x == 0 && y>0 && y < 24|| x == 99 && y > 0 && y < 24)
+                    if (x == 0 && y>0 && y < height-1|| x == width-1 && y > 0 && y < height-1)
                         world[y, x] = '┃';
-                    else if (y == 0 && x > 0 && x < 99 || y == 24 && x > 0 && x < 99)
+                    else if (y == 0 && x > 0 && x < width-1 || y == height-1 && x > 0 && x < width-1)
                         world[y, x] = '━';
                     else if(x == 0 && y == 0)
                         world[y, x] = '┏';
-                    else if (x == 99 && y == 24)
+                    else if (x == width-1 && y == height-1)
                         world[y, x] = '┛';
-                    else if (x == 0 && y == 24)
+                    else if (x == 0 && y == height-1)
                         world[y, x] = '┗';
-                    else if (x == 99 && y == 0)
+                    else if (x == width-1 && y == 0)
                         world[y, x] = '┓';
                     //bg
                     else
@@ -43,7 +43,7 @@ namespace Program
 
             int cordX, cordY, Nroom;
 
-            Nroom = rnd.Next(50, 55);
+            Nroom = rnd.Next(height*width/50, height*width/45);
             for (int i = 0; i < Nroom; i++)
             {
                 cordX = rnd.Next(1, 94);
@@ -58,36 +58,45 @@ namespace Program
                 }
             }
 
-            int item = rnd.Next(15, 25);
+            int item = rnd.Next(5, 10);
             for(int o = 0; o < item; o++)
             {
-                cordX = rnd.Next(1, 99);
-                cordY = rnd.Next(1, 24);
+                cordX = rnd.Next(1, width-1);
+                cordY = rnd.Next(1, height-1);
                 if (world[cordY, cordX] == '#' || world[cordY, cordX] == '@')
                     item++;
                 else
                     world[cordY, cordX] = '❤';
             }
-
-
-
+            
             //always clean
-            for (int j = 0; j < 6; j++)
+            int jj = height/8, ff = width/7; 
+            for (int j = 0; j < 3; j++)
             {
-                for (int f = 0; f < 30; f++)
+                for (int f = 0; f < 15; f++)
                 {
-                    world[11 + j, 20 + f] = ' ';
-                    world[14 + j, 69 + f] = ' ';
-                    world[13, 43 + f] = ' ';
+                    //   height  width
+                    world[height/2 + j, 15 + f] = ' ';
+                    world[height-jj - 1 + j, 84 + f] = ' ';
                     world[1 + j, 1 + f] = ' ';
-                    world[3 + j, 25] = ' ';
+                    world[1 + f, 15] = ' ';
+                    world[height/2 + j, width/2+f] = ' ';
+                    // world[8 + f, 30] = ' ';
+                    // world[20, 30+f] = ' ';
+                    // world[20-f, 45] = ' ';
+                    // world[18, 45+f] = ' ';
+                    // world[18-f, 60] = ' ';
+                    // world[7, 60+f] = ' ';
+                    // world[7 - j, 75 + f] = ' ';
+                    // world[15 + j, 84 + f] = ' ';
+                    // world[7+f, 87] = ' ';
                 }
             }
 
             //printing world
-            for (int i=0; i<25; i++)
+            for (int i=0; i<height; i++)
             {
-                for(int t = 0; t < 100; t++)
+                for(int t = 0; t < width; t++)
                 {
                     Console.Write(world[i, t]);
                 }

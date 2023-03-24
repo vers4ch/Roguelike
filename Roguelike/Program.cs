@@ -58,8 +58,8 @@ namespace Program
                 {
                     for (int f = 0; f < wsq-5; f++)//17, 20
                     {
-                        world[cordY + j, cordX + f] = '▓';
-                        // world[cordY + j, cordX + f] = '#';
+                        // world[cordY + j, cordX + f] = '▓';
+                        world[cordY + j, cordX + f] = '#';
                     }
                 }
             }
@@ -101,6 +101,19 @@ namespace Program
                 Console.WriteLine();
             }
         }
+
+        // public static void Print()
+        // {
+        //     //printing world
+        //     for (int i=0; i<height; i++)
+        //     {
+        //         for(int t = 0; t < width; t++)
+        //         {
+        //             Console.Write(world[i, t]);
+        //         }
+        //         Console.WriteLine();
+        //     }
+        // }
     }
     class Program
     {

@@ -6,12 +6,13 @@ using System;
 
 namespace Program
 {
-    class Program
+    public static class Map
     {
-        static void Main()
+        public static void Gener()
         {
-            int height = 25;
-            int width = 100;
+            int height = 45; //min = 15
+            int width = 170; //min = 50
+            
             char[,] world = new char[height, width];
             Random rnd = new Random();
 
@@ -41,56 +42,53 @@ namespace Program
                 }
             }
 
-            int cordX, cordY, Nroom;
+            int cordX, cordY, Nroom, hsq, wsq;
 
+            //!!
             Nroom = rnd.Next(height*width/50, height*width/45);
             for (int i = 0; i < Nroom; i++)
             {
-                cordX = rnd.Next(1, 94);
-                cordY = rnd.Next(1, 21);
+                cordX = rnd.Next(1, width-7);
+                cordY = rnd.Next(2, height-height/6);
+                
+                hsq = rnd.Next(height/7, height/6);///!!!!
+                wsq = rnd.Next(width/21, width/11);
 
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < hsq-3; j++)//7, 10
                 {
-                    for (int f = 0; f < 6; f++)
+                    for (int f = 0; f < wsq-5; f++)//17, 20
                     {
                         world[cordY + j, cordX + f] = '▓';
+                        // world[cordY + j, cordX + f] = '#';
                     }
                 }
             }
 
-            int item = rnd.Next(5, 10);
+            //always clean
+            int jj = height/8, ff = width/7; 
+            for (int j = 0; j < height/6; j++)
+            {
+                for (int f = 0; f < width/8; f++)
+                {
+                    //   height  width
+                    world[height/2 + j, width/7 + f] = ' ';
+                    world[height-jj - 3 + j, width - width/6 + f] = ' ';//bottom right 
+                    world[1 + j, 1 + f] = ' ';
+                    world[1 + f, width/7] = ' ';
+                    world[height/2 + j, width/2+f] = ' ';
+                }
+            }
+            
+            //heart
+            int item = rnd.Next(height/5, width/10);
             for(int o = 0; o < item; o++)
             {
                 cordX = rnd.Next(1, width-1);
                 cordY = rnd.Next(1, height-1);
-                if (world[cordY, cordX] == '#' || world[cordY, cordX] == '@')
+                if (world[cordY, cordX] == '▓' || world[cordY, cordX] == '@')
                     item++;
                 else
                     world[cordY, cordX] = '❤';
-            }
-            
-            //always clean
-            int jj = height/8, ff = width/7; 
-            for (int j = 0; j < 3; j++)
-            {
-                for (int f = 0; f < 15; f++)
-                {
-                    //   height  width
-                    world[height/2 + j, 15 + f] = ' ';
-                    world[height-jj - 1 + j, 84 + f] = ' ';
-                    world[1 + j, 1 + f] = ' ';
-                    world[1 + f, 15] = ' ';
-                    world[height/2 + j, width/2+f] = ' ';
-                    // world[8 + f, 30] = ' ';
-                    // world[20, 30+f] = ' ';
-                    // world[20-f, 45] = ' ';
-                    // world[18, 45+f] = ' ';
-                    // world[18-f, 60] = ' ';
-                    // world[7, 60+f] = ' ';
-                    // world[7 - j, 75 + f] = ' ';
-                    // world[15 + j, 84 + f] = ' ';
-                    // world[7+f, 87] = ' ';
-                }
             }
 
             //printing world
@@ -102,6 +100,13 @@ namespace Program
                 }
                 Console.WriteLine();
             }
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            Map.Gener();
         }
     }
 }

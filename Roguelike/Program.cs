@@ -113,7 +113,7 @@ namespace Program
             {
                 Console.CursorVisible = false;
                 Console.SetCursorPosition(0, 0);
-                char[,] world = new char[25, 100];
+                char[,] world = new char[35, 170];
                 int userX = 10;
                 int userY = 5;
                 while (true)
@@ -134,28 +134,28 @@ namespace Program
                     switch (moveKey.Key)
                     {
                         case ConsoleKey.UpArrow:
-                            if (world[userX, userY - 1] != '#')
+                            if (world[userY-1, userX] != '#')
                             {
                                 userY--;
                             }
 
                             break;
                         case ConsoleKey.DownArrow:
-                            if (world[userX, userY + 1] != '#')
+                            if (world[userY+1, userX] != '#')
                             {
                                 userY++;
                             }
 
                             break;
                         case ConsoleKey.LeftArrow:
-                            if (world[userX - 1, userY] != '#')
+                            if (world[userY, userX-1] != '#')
                             {
                                 userX--;
                             }
 
                             break;
                         case ConsoleKey.RightArrow:
-                            if (world[userX + 1, userY] != '#')
+                            if (world[userY, userX+1] != '#')
                             {
                                 userX++;
                             }

@@ -3,17 +3,16 @@
 //  Created by Versach on 19.03.2023.
 //
 using System;
+using System.Threading;
 
 namespace Program
 {
     public static class Map
     {
-        public static void Gener()
+        public static void Rand(char[,] world)
         {
             int height = 45; //min = 15
             int width = 170; //min = 50
-            
-            char[,] world = new char[height, width];
             Random rnd = new Random();
 
             //draw WORLD with
@@ -90,36 +89,186 @@ namespace Program
                 else
                     world[cordY, cordX] = '❤';
             }
-
-            //printing world
-            for (int i=0; i<height; i++)
+        }
+    }
+    public static class startGame
+    {
+        public static void start()
+        {
+            Console.WriteLine(
+                "                                             1.Play\n\n                                             2.Exit");
+            int number = 0;
+            Console.WriteLine("                                             choice number");
+            number = Convert.ToInt32(Console.ReadLine());
+            if (number == 1)
             {
-                for(int t = 0; t < width; t++)
-                {
-                    Console.Write(world[i, t]);
-                }
-                Console.WriteLine();
+                Console.Clear();
+            }
+
+            if (number == 2)
+            {
+                Console.Clear();
+                Environment.Exit(0);
+            }
+        }
+    }
+
+    public class Person
+    {
+        public string name;
+
+        public Person(string name)
+        {
+            this.name = name;
+        }
+
+        public virtual void PrintPerson()
+        {
+            Console.WriteLine(this.name);
+        }
+
+        public class Igor : Person
+        {
+            public string skills;
+
+            public Igor(string name, string skills) : base(name)
+            {
+                this.skills = skills;
+            }
+
+            public override void PrintPerson()
+            {
+                Console.WriteLine($"{name},{skills}");
             }
         }
 
-        // public static void Print()
-        // {
-        //     //printing world
-        //     for (int i=0; i<height; i++)
-        //     {
-        //         for(int t = 0; t < width; t++)
-        //         {
-        //             Console.Write(world[i, t]);
-        //         }
-        //         Console.WriteLine();
-        //     }
-        // }
-    }
-    class Program
-    {
-        static void Main()
+        public static class ChoicePerson
         {
-            Map.Gener();
+            public static void Person()
+            {
+                Igor a1 = new Igor("                                            1 - Игорь", "смертельный вопрос\n");
+                a1.PrintPerson();
+                Igor a2 = new Igor("                                            2 - Игорь", "супер броня\n");
+                a2.PrintPerson();
+                int choice = 0;
+
+                while (choice != 1 && choice != 2)
+                {
+                    Console.WriteLine("                                             choice your person");
+                    choice = Convert.ToInt32(Console.ReadLine());
+                }
+
+                if (choice == 1)
+                {
+                    Console.WriteLine("                                         you choice is Person number 1\n");
+                }
+
+                if (choice == 2)
+                {
+                    Console.WriteLine("                                             your choice is Person number 2\n");
+                }
+
+                Thread.Sleep(500);
+                int number1 = 0;
+                while (number1 != 3)
+                {
+                    Console.WriteLine("                                             If you are ready push number 3\n");
+                    number1 = Convert.ToInt32(Console.ReadLine());
+                }
+
+                if (number1 == 3)
+                {
+                    Console.Clear();
+                    char[] load = new char[52]{'[','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.',']'};
+                    for (int i = 0; i < 50; i++)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("                                         now we can start the game...\n");
+                        Console.WriteLine($"                        {i*2+2}%");
+                        load[i+1] = '#';
+                        for (int o = 0; o < 52; o++)
+                        {
+                            Console.Write(load[o]);
+                        }
+
+                        Thread.Sleep(150);
+                    }
+                    Console.Clear();
+                }
+            }
+        }
+
+        public static class Move
+        {
+            public static void Moves(char[,] world)
+            {
+                Console.CursorVisible = false;
+                Console.SetCursorPosition(0, 0);
+                int userX = 10;
+                int userY = 5;
+                while (true)
+                {
+                    for (int i = 0; i < world.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < world.GetLength(1); j++)
+                        {
+                            Console.Write(world[i, j]);
+                        }
+
+                        Console.WriteLine();
+                    }
+
+                    Console.SetCursorPosition(userX, userY);
+                    Console.Write('@');
+                    ConsoleKeyInfo moveKey = Console.ReadKey();
+                    switch (moveKey.Key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            if (world[userY-1, userX] != '#')
+                            {
+                                userY--;
+                            }
+
+                            break;
+                        case ConsoleKey.DownArrow:
+                            if (world[userY+1, userX] != '#')
+                            {
+                                userY++;
+                            }
+
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            if (world[userY, userX-1] != '#')
+                            {
+                                userX--;
+                            }
+
+                            break;
+                        case ConsoleKey.RightArrow:
+                            if (world[userY, userX+1] != '#')
+                            {
+                                userX++;
+                            }
+
+                            break;
+
+                    }
+
+                    Console.Clear();
+                }
+            }
+
+            class Program
+            {
+                static void Main()
+                {
+                    char[,] world = new char[45, 170];
+                    startGame.start();
+                    ChoicePerson.Person();
+                    Map.Rand(world);
+                    Move.Moves(world);
+                }
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿//  main.cs
+//  main.cs
 //  Roguelike
 //  Created by Versach on 19.03.2023.
 //
@@ -113,7 +113,7 @@ namespace Program
             {
                 Console.CursorVisible = false;
                 Console.SetCursorPosition(0, 0);
-                char[,] world = new char[35, 170];
+                char[,] world = new char[25, 100];
                 int userX = 10;
                 int userY = 5;
                 while (true)
@@ -134,28 +134,28 @@ namespace Program
                     switch (moveKey.Key)
                     {
                         case ConsoleKey.UpArrow:
-                            if (world[userY-1, userX] != '#')
+                            if (world[userX, userY - 1] != '#')
                             {
                                 userY--;
                             }
 
                             break;
                         case ConsoleKey.DownArrow:
-                            if (world[userY+1, userX] != '#')
+                            if (world[userX, userY + 1] != '#')
                             {
                                 userY++;
                             }
 
                             break;
                         case ConsoleKey.LeftArrow:
-                            if (world[userY, userX-1] != '#')
+                            if (world[userX - 1, userY] != '#')
                             {
                                 userX--;
                             }
 
                             break;
                         case ConsoleKey.RightArrow:
-                            if (world[userY, userX+1] != '#')
+                            if (world[userX + 1, userY] != '#')
                             {
                                 userX++;
                             }

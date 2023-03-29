@@ -8,7 +8,7 @@ namespace Program
     {
         public static void Rand(char[,] world)
         {
-            
+
             int height = 45; //min = 15
             int width = 170; //min = 50
             Random rnd = new Random();
@@ -48,12 +48,12 @@ namespace Program
                 cordX = rnd.Next(1, width - 7);
                 cordY = rnd.Next(2, height - height / 6);
 
-                hsq = rnd.Next(height / 7, height / 6);///!!!!
+                hsq = rnd.Next(height / 7, height / 6); ///!!!!
                 wsq = rnd.Next(width / 21, width / 11);
 
-                for (int j = 0; j < hsq - 3; j++)//7, 10
+                for (int j = 0; j < hsq - 3; j++) //7, 10
                 {
-                    for (int f = 0; f < wsq - 5; f++)//17, 20
+                    for (int f = 0; f < wsq - 5; f++) //17, 20
                     {
                         // world[cordY + j, cordX + f] = '▓';
                         world[cordY + j, cordX + f] = '#';
@@ -69,7 +69,7 @@ namespace Program
                 {
                     //   height  width
                     world[height / 2 + j, width / 7 + f] = ' ';
-                    world[height - jj - 3 + j, width - width / 6 + f] = ' ';//bottom right 
+                    world[height - jj - 3 + j, width - width / 6 + f] = ' '; //bottom right 
                     world[1 + j, 1 + f] = ' ';
                     world[1 + f, width / 7] = ' ';
                     world[height / 2 + j, width / 2 + f] = ' ';
@@ -85,10 +85,25 @@ namespace Program
                 if (world[cordY, cordX] == '▓' || world[cordY, cordX] == '@')
                     item++;
                 else
-                    world[cordY, cordX] =(char)003;
+                    world[cordY, cordX] = (char)003;
+            }
+
+            //enemy
+            int pp = rnd.Next(height / 3, width / 5);
+            for (int o = 0; o < pp; o++)
+            {
+                cordX = rnd.Next(1, width - 1);
+                cordY = rnd.Next(1, height - 1);
+                if (world[cordY, cordX] == '▓' || world[cordY, cordX] == '@' && world[cordY, cordX] != (char)003)
+                    pp++;
+                else
+                {
+                    world[cordY, cordX] = '@';
+                }
             }
         }
     }
+
     public static class startGame
     {
         public static void start()

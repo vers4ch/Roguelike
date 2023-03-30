@@ -4,6 +4,7 @@
 //
 using System;
 using System.Threading;
+using static Program.Person;
 
 namespace Program
 {
@@ -22,17 +23,17 @@ namespace Program
                 for (int x = 0; x < width; x++)
                 {
                     //border
-                    if (x == 0 && y>0 && y < height-1|| x == width-1 && y > 0 && y < height-1)
+                    if (x == 0 && y > 0 && y < height - 1 || x == width - 1 && y > 0 && y < height - 1)
                         world[y, x] = '┃';
-                    else if (y == 0 && x > 0 && x < width-1 || y == height-1 && x > 0 && x < width-1)
+                    else if (y == 0 && x > 0 && x < width - 1 || y == height - 1 && x > 0 && x < width - 1)
                         world[y, x] = '━';
-                    else if(x == 0 && y == 0)
+                    else if (x == 0 && y == 0)
                         world[y, x] = '┏';
-                    else if (x == width-1 && y == height-1)
+                    else if (x == width - 1 && y == height - 1)
                         world[y, x] = '┛';
-                    else if (x == 0 && y == height-1)
+                    else if (x == 0 && y == height - 1)
                         world[y, x] = '┗';
-                    else if (x == width-1 && y == 0)
+                    else if (x == width - 1 && y == 0)
                         world[y, x] = '┓';
                     //bg
                     else
@@ -45,18 +46,18 @@ namespace Program
             int cordX, cordY, Nroom, hsq, wsq;
 
             //sq
-            Nroom = rnd.Next(height*width/50, height*width/45);
+            Nroom = rnd.Next(height * width / 50, height * width / 45);
             for (int i = 0; i < Nroom; i++)
             {
-                cordX = rnd.Next(1, width-8);
-                cordY = rnd.Next(2, height-height/6+2);
-                
-                hsq = rnd.Next(height/7, height/6);///!!!!
-                wsq = rnd.Next(width/21, width/11);
+                cordX = rnd.Next(1, width - 8);
+                cordY = rnd.Next(2, height - height / 6 + 2);
 
-                for (int j = 0; j < hsq-3; j++)//7, 10
+                hsq = rnd.Next(height / 7, height / 6);///!!!!
+                wsq = rnd.Next(width / 21, width / 11);
+
+                for (int j = 0; j < hsq - 3; j++)//7, 10
                 {
-                    for (int f = 0; f < wsq-5; f++)//17, 20
+                    for (int f = 0; f < wsq - 5; f++)//17, 20
                     {
                         world[cordY + j, cordX + f] = '#';
                     }
@@ -64,30 +65,43 @@ namespace Program
             }
 
             //always clean
-            int jj = height/8, ff = width/7; 
-            for (int j = 0; j < height/6; j++)
+            int jj = height / 8, ff = width / 7;
+            for (int j = 0; j < height / 6; j++)
             {
-                for (int f = 0; f < width/8; f++)
+                for (int f = 0; f < width / 8; f++)
                 {
                     //   height  width
-                    world[height/2 + j, width/7 + f] = ' ';
-                    world[height-jj - 3 + j, width - width/6 + f] = ' ';//bottom right 
+                    world[height / 2 + j, width / 7 + f] = ' ';
+                    world[height - jj - 3 + j, width - width / 6 + f] = ' ';//bottom right 
                     world[1 + j, 1 + f] = ' ';
-                    world[1 + f, width/7] = ' ';
-                    world[height/2 + j, width/2+f] = ' ';
+                    world[1 + f, width / 7] = ' ';
+                    world[height / 2 + j, width / 2 + f] = ' ';
                 }
             }
-            
+
             //heart
-            int item = rnd.Next(height/5, width/10);
-            for(int o = 0; o < item; o++)
+            int item = rnd.Next(height / 5, width / 10);
+            for (int o = 0; o < item; o++)
             {
-                cordX = rnd.Next(1, width-1);
-                cordY = rnd.Next(1, height-1);
+                cordX = rnd.Next(1, width - 1);
+                cordY = rnd.Next(1, height - 1);
                 if (world[cordY, cordX] == '▓' || world[cordY, cordX] == '@')
                     item++;
                 else
-                    world[cordY, cordX] = '❤';
+                    world[cordY, cordX] = (char)003;
+            }
+            //enemy
+            int pp = rnd.Next(height / 3, width / 5);
+            for (int o = 0; o < pp; o++)
+            {
+                cordX = rnd.Next(1, width - 1);
+                cordY = rnd.Next(1, height - 1);
+                if (world[cordY, cordX] == '▓' || world[cordY, cordX] == '@' && world[cordY, cordX] != (char)003)
+                    pp++;
+                else
+                {
+                    world[cordY, cordX] = '@';
+                }
             }
         }
     }
@@ -110,7 +124,7 @@ namespace Program
             }
         }
     }
-
+    
     public class Person
     {
         public string name;
@@ -139,6 +153,7 @@ namespace Program
                 Console.WriteLine($"{name},{skills}");
             }
         }
+
 
         public static class ChoicePerson
         {
@@ -177,17 +192,17 @@ namespace Program
                 if (number1 == 3)
                 {
                     Console.Clear();
-                    char[] load = new char[52]{'[','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.',']'};
+                    char[] load = new char[52] { '[', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', ']' };
                     for (int i = 0; i < 50; i++)
                     {
                         Console.Clear();
                         Console.WriteLine();
-                        if(i%2 == 0)
+                        if (i % 2 == 0)
                             Console.WriteLine("                       Loading..\n");
                         else
                             Console.WriteLine("                       Loading...\n");
-                        Console.WriteLine($"                         {i*2+2}%");
-                        load[i+1] = '#';
+                        Console.WriteLine($"                         {i * 2 + 2}%");
+                        load[i + 1] = '#';
                         for (int o = 0; o < 52; o++)
                         {
                             Console.Write(load[o]);
@@ -204,9 +219,14 @@ namespace Program
         {
             public static void Moves(char[,] world)
             {
+                Console.OutputEncoding = System.Text.Encoding.Unicode;
+                string smile = "♕";
+                char hearts = (char)003;
+                Console.CursorVisible = false;
                 Console.SetCursorPosition(0, 0);
                 int userX = 8;
                 int userY = 5;
+                char[] heart = new char[1];
                 while (true)
                 {
                     for (int i = 0; i < world.GetLength(0); i++)
@@ -218,34 +238,40 @@ namespace Program
 
                         Console.WriteLine();
                     }
+                    Console.SetCursorPosition(1, 1);
+                    Console.Write("Heart:" + hearts);
+                    for (int k = 0; k < heart.Length; k++)
+                    {
+                        Console.Write(heart[k] + " ");
+                    }
                     Console.SetCursorPosition(userX, userY);
-                    Console.Write('@');
+                    Console.Write(smile);
                     ConsoleKeyInfo moveKey = Console.ReadKey();
                     switch (moveKey.Key)
                     {
                         case ConsoleKey.UpArrow:
-                            if (world[userY-1, userX] != '#' && world[userY-1, userX] != '┃' && world[userY-1, userX] != '━' && world[userY-1, userX] != '┏' && world[userY-1, userX] != '┛' && world[userY-1, userX] != '┗' && world[userY-1, userX] != '┓' )
+                            if (world[userY - 1, userX] != '#' && world[userY - 1, userX] != '┃' && world[userY - 1, userX] != '━' && world[userY - 1, userX] != '┏' && world[userY - 1, userX] != '┛' && world[userY - 1, userX] != '┗' && world[userY - 1, userX] != '┓')
                             {
                                 userY--;
                             }
 
                             break;
                         case ConsoleKey.DownArrow:
-                            if (world[userY+1, userX] != '#' && world[userY+1, userX] != '┃' && world[userY+1, userX] != '━' && world[userY+1, userX] != '┏' && world[userY+1, userX] != '┛' && world[userY+1, userX] != '┗' && world[userY+1, userX] != '┓')
+                            if (world[userY + 1, userX] != '#' && world[userY + 1, userX] != '┃' && world[userY + 1, userX] != '━' && world[userY + 1, userX] != '┏' && world[userY + 1, userX] != '┛' && world[userY + 1, userX] != '┗' && world[userY + 1, userX] != '┓')
                             {
                                 userY++;
                             }
 
                             break;
                         case ConsoleKey.LeftArrow:
-                            if (world[userY, userX-1] != '#' && world[userY, userX-1] != '┃' && world[userY, userX-1] != '━' && world[userY, userX-1] != '┏' && world[userY, userX-1] != '┛' && world[userY, userX-1] != '┗' && world[userY, userX-1] != '┓')
+                            if (world[userY, userX - 1] != '#' && world[userY, userX - 1] != '┃' && world[userY, userX - 1] != '━' && world[userY, userX - 1] != '┏' && world[userY, userX - 1] != '┛' && world[userY, userX - 1] != '┗' && world[userY, userX - 1] != '┓')
                             {
                                 userX--;
                             }
 
                             break;
                         case ConsoleKey.RightArrow:
-                            if (world[userY, userX+1] != '#' && world[userY, userX+1] != '┃' && world[userY, userX+1] != '━' && world[userY, userX+1] != '┏' && world[userY, userX+1] != '┛' && world[userY, userX+1] != '┗' && world[userY, userX+1] != '┓')
+                            if (world[userY, userX + 1] != '#' && world[userY, userX + 1] != '┃' && world[userY, userX + 1] != '━' && world[userY, userX + 1] != '┏' && world[userY, userX + 1] != '┛' && world[userY, userX + 1] != '┗' && world[userY, userX + 1] != '┓')
                             {
                                 userX++;
                             }
@@ -253,19 +279,154 @@ namespace Program
                             break;
                     }
 
+                    if (world[userY, userX] == hearts)
+                    {
+                        world[userY, userX] = ' ';
+
+                        char[] listHeart = new char[heart.Length + 1];
+                        for (int i = 0; i < heart.Length; i++)
+                        {
+                            listHeart[i] = heart[i];
+                        }
+
+                        listHeart[listHeart.Length - 1] = (char)003;
+                        heart = listHeart;
+                    }
                     Console.Clear();
                 }
             }
-
-            class Program
+            public static class guess1
             {
-                static void Main()
+                public static void Gener()
                 {
+                    int height = 22; //min = 15
+                    int width = 80; //min = 50
+
+                    string[,] gues = new string[height, width];
+
+                    //draw
+                    for (int y = 0; y < height; y++)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+                            string text1 = "You have met the enemy";
+                            string text2 = "Choose an action";
+                            string text3 = "a) 'Ударить'";
+                            string text4 = "b) 'Убить'";
+                            string text5 = "c) 'Задать вопрос'";
+
+                            if (y == 3 && x == width / 2 - text1.Length / 2)
+                                gues[y, x] = text1;
+                            else if (y == 10 && x == width / 2 - text2.Length / 2)
+                                gues[y, x] = text2;
+                            else if (y == 15 && x == 10)
+                                gues[y, x] = text3;
+                            else if (y == 15 && x == 20)
+                                gues[y, x] = text4;
+                            else if (y == 15 && x == 30)
+                                gues[y, x] = text5;
+                            else if (x == width - 1 && y > 0 && y < height - 1 && y == 3)
+                                gues[y, x - text1.Length + 1] = "┃";
+                            else if (x == width - 1 && y > 0 && y < height - 1 && y == 10)
+                                gues[y, x - text2.Length + 1] = "┃";
+                            else if (x == width - 1 && y > 0 && y < height - 1 && y == 15)
+                                gues[y, x - (text3.Length + text4.Length + text5.Length - 3)] = "┃";
+                            else if (x == 0 && y > 0 && y < height - 1 || x == width - 1 && y > 0 && y < height - 1 && y != 3 && y != 10 && y != 15)
+                                gues[y, x] = "┃";
+                            else if (y == 0 && x > 0 && x < width - 1 || y == height - 1 && x > 0 && x < width - 1)
+                                gues[y, x] = "━";
+                            else if (x == 0 && y == 0)
+                                gues[y, x] = "┏";
+                            else if (x == width - 1 && y == height - 1)
+                                gues[y, x] = "┛";
+                            else if (x == 0 && y == height - 1)
+                                gues[y, x] = "┗";
+                            else if (x == width - 1 && y == 0)
+                                gues[y, x] = "┓";
+                            //bg
+
+                            else
+                            {
+                                gues[y, x] = " ";
+
+                            }
+                        }
+                    }
+
+                    //printing
+                    for (int i = 0; i < height; i++)
+                    {
+                        for (int t = 0; t < width; t++)
+                        {
+                            Console.Write(gues[i, t]);
+                        }
+                        Console.WriteLine();
+                    }
+                    string one = Console.ReadLine(); // ДАЛЬШЕ ЕСЛИ ИГРОК ВЫБРАЛ А или Б или С , то сносится столько-то урона
+                                                     // НАВЕРНО НЕ СТОИТ ИСПОЛЬЗОВАТЬ ReadKey, чтоб игрок случайно не ошибся с выбором
+                }
+
+            }
+            internal class Program
+            {
+                public static void Main(string[] args)
+                {
+                    Console.OutputEncoding = System.Text.Encoding.Unicode;
                     char[,] world = new char[45, 170];
                     startGame.start();
                     ChoicePerson.Person();
                     Map.Rand(world);
                     Moves(world);
+                    guess1.Gener();
+
+                    Igor Igor = new Igor();
+                    enemy enemy = new enemy();
+
+                    enemy.SetDamage(Igor, 25);
+                    Igor.SetDamage(enemy, 100);
+                    
+                    Console.ReadKey();
+                }
+            }
+            public abstract class Character
+            {
+                public int Health { get; private set; }
+
+                public Character()
+                {
+                    Health = 100;
+                }
+
+                public virtual void GetDamage(int damage)
+                {
+                    Health -= damage;
+                    if (Health < 1)
+                    {
+                        Console.WriteLine("you die");
+                        
+                    }
+                }
+                public void SetDamage(Character character, int damage)
+                {
+                    character.GetDamage(damage);
+                }
+            }
+
+            public class Igor : Character
+            {
+                public override void GetDamage(int damage)
+                {
+
+                    base.GetDamage(damage);
+                }
+            }
+
+            public class enemy : Character
+            {
+                public override void GetDamage(int damage)
+                {
+
+                    base.GetDamage(damage);
                 }
             }
         }

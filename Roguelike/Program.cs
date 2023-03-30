@@ -4,6 +4,7 @@
 //
 using System;
 using System.Threading;
+using static Program.Person;
 
 namespace Program
 {
@@ -22,17 +23,17 @@ namespace Program
                 for (int x = 0; x < width; x++)
                 {
                     //border
-                    if (x == 0 && y>0 && y < height-1|| x == width-1 && y > 0 && y < height-1)
+                    if (x == 0 && y > 0 && y < height - 1 || x == width - 1 && y > 0 && y < height - 1)
                         world[y, x] = '┃';
-                    else if (y == 0 && x > 0 && x < width-1 || y == height-1 && x > 0 && x < width-1)
+                    else if (y == 0 && x > 0 && x < width - 1 || y == height - 1 && x > 0 && x < width - 1)
                         world[y, x] = '━';
-                    else if(x == 0 && y == 0)
+                    else if (x == 0 && y == 0)
                         world[y, x] = '┏';
-                    else if (x == width-1 && y == height-1)
+                    else if (x == width - 1 && y == height - 1)
                         world[y, x] = '┛';
-                    else if (x == 0 && y == height-1)
+                    else if (x == 0 && y == height - 1)
                         world[y, x] = '┗';
-                    else if (x == width-1 && y == 0)
+                    else if (x == width - 1 && y == 0)
                         world[y, x] = '┓';
                     //bg
                     else
@@ -45,18 +46,18 @@ namespace Program
             int cordX, cordY, Nroom, hsq, wsq;
 
             //sq
-            Nroom = rnd.Next(height*width/50, height*width/45);
+            Nroom = rnd.Next(height * width / 50, height * width / 45);
             for (int i = 0; i < Nroom; i++)
             {
-                cordX = rnd.Next(1, width-8);
-                cordY = rnd.Next(2, height-height/6+2);
-                
-                hsq = rnd.Next(height/7, height/6);///!!!!
-                wsq = rnd.Next(width/21, width/11);
+                cordX = rnd.Next(1, width - 8);
+                cordY = rnd.Next(2, height - height / 6 + 2);
 
-                for (int j = 0; j < hsq-3; j++)//7, 10
+                hsq = rnd.Next(height / 7, height / 6);///!!!!
+                wsq = rnd.Next(width / 21, width / 11);
+
+                for (int j = 0; j < hsq - 3; j++)//7, 10
                 {
-                    for (int f = 0; f < wsq-5; f++)//17, 20
+                    for (int f = 0; f < wsq - 5; f++)//17, 20
                     {
                         world[cordY + j, cordX + f] = '#';
                     }
@@ -64,26 +65,26 @@ namespace Program
             }
 
             //always clean
-            int jj = height/8, ff = width/7; 
-            for (int j = 0; j < height/6; j++)
+            int jj = height / 8, ff = width / 7;
+            for (int j = 0; j < height / 6; j++)
             {
-                for (int f = 0; f < width/8; f++)
+                for (int f = 0; f < width / 8; f++)
                 {
                     //   height  width
-                    world[height/2 + j, width/7 + f] = ' ';
-                    world[height-jj - 3 + j, width - width/6 + f] = ' ';//bottom right 
+                    world[height / 2 + j, width / 7 + f] = ' ';
+                    world[height - jj - 3 + j, width - width / 6 + f] = ' ';//bottom right 
                     world[1 + j, 1 + f] = ' ';
-                    world[1 + f, width/7] = ' ';
-                    world[height/2 + j, width/2+f] = ' ';
+                    world[1 + f, width / 7] = ' ';
+                    world[height / 2 + j, width / 2 + f] = ' ';
                 }
             }
-            
+
             //heart
-            int item = rnd.Next(height/5, width/10);
-            for(int o = 0; o < item; o++)
+            int item = rnd.Next(height / 5, width / 10);
+            for (int o = 0; o < item; o++)
             {
-                cordX = rnd.Next(1, width-1);
-                cordY = rnd.Next(1, height-1);
+                cordX = rnd.Next(1, width - 1);
+                cordY = rnd.Next(1, height - 1);
                 if (world[cordY, cordX] == '▓' || world[cordY, cordX] == '@')
                     item++;
                 else
@@ -177,17 +178,17 @@ namespace Program
                 if (number1 == 3)
                 {
                     Console.Clear();
-                    char[] load = new char[52]{'[','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.',']'};
+                    char[] load = new char[52] { '[', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', ']' };
                     for (int i = 0; i < 50; i++)
                     {
                         Console.Clear();
                         Console.WriteLine();
-                        if(i%2 == 0)
+                        if (i % 2 == 0)
                             Console.WriteLine("                       Loading..\n");
                         else
                             Console.WriteLine("                       Loading...\n");
-                        Console.WriteLine($"                         {i*2+2}%");
-                        load[i+1] = '#';
+                        Console.WriteLine($"                         {i * 2 + 2}%");
+                        load[i + 1] = '#';
                         for (int o = 0; o < 52; o++)
                         {
                             Console.Write(load[o]);
@@ -224,28 +225,28 @@ namespace Program
                     switch (moveKey.Key)
                     {
                         case ConsoleKey.UpArrow:
-                            if (world[userY-1, userX] != '#' && world[userY-1, userX] != '┃' && world[userY-1, userX] != '━' && world[userY-1, userX] != '┏' && world[userY-1, userX] != '┛' && world[userY-1, userX] != '┗' && world[userY-1, userX] != '┓' )
+                            if (world[userY - 1, userX] != '#' && world[userY - 1, userX] != '┃' && world[userY - 1, userX] != '━' && world[userY - 1, userX] != '┏' && world[userY - 1, userX] != '┛' && world[userY - 1, userX] != '┗' && world[userY - 1, userX] != '┓')
                             {
                                 userY--;
                             }
 
                             break;
                         case ConsoleKey.DownArrow:
-                            if (world[userY+1, userX] != '#' && world[userY+1, userX] != '┃' && world[userY+1, userX] != '━' && world[userY+1, userX] != '┏' && world[userY+1, userX] != '┛' && world[userY+1, userX] != '┗' && world[userY+1, userX] != '┓')
+                            if (world[userY + 1, userX] != '#' && world[userY + 1, userX] != '┃' && world[userY + 1, userX] != '━' && world[userY + 1, userX] != '┏' && world[userY + 1, userX] != '┛' && world[userY + 1, userX] != '┗' && world[userY + 1, userX] != '┓')
                             {
                                 userY++;
                             }
 
                             break;
                         case ConsoleKey.LeftArrow:
-                            if (world[userY, userX-1] != '#' && world[userY, userX-1] != '┃' && world[userY, userX-1] != '━' && world[userY, userX-1] != '┏' && world[userY, userX-1] != '┛' && world[userY, userX-1] != '┗' && world[userY, userX-1] != '┓')
+                            if (world[userY, userX - 1] != '#' && world[userY, userX - 1] != '┃' && world[userY, userX - 1] != '━' && world[userY, userX - 1] != '┏' && world[userY, userX - 1] != '┛' && world[userY, userX - 1] != '┗' && world[userY, userX - 1] != '┓')
                             {
                                 userX--;
                             }
 
                             break;
                         case ConsoleKey.RightArrow:
-                            if (world[userY, userX+1] != '#' && world[userY, userX+1] != '┃' && world[userY, userX+1] != '━' && world[userY, userX+1] != '┏' && world[userY, userX+1] != '┛' && world[userY, userX+1] != '┗' && world[userY, userX+1] != '┓')
+                            if (world[userY, userX + 1] != '#' && world[userY, userX + 1] != '┃' && world[userY, userX + 1] != '━' && world[userY, userX + 1] != '┏' && world[userY, userX + 1] != '┛' && world[userY, userX + 1] != '┗' && world[userY, userX + 1] != '┓')
                             {
                                 userX++;
                             }
@@ -259,13 +260,61 @@ namespace Program
 
             class Program
             {
-                static void Main()
+                public static void Main(string[] args)
                 {
                     char[,] world = new char[45, 170];
                     startGame.start();
                     ChoicePerson.Person();
                     Map.Rand(world);
                     Moves(world);
+
+                    Igor Igor = new Igor();
+                    enemy enemy = new enemy();
+
+                    enemy.SetDamage(Igor, 25);
+                    Igor.SetDamage(enemy, 100);
+
+                    Console.ReadKey();
+                }
+            }
+            public abstract class Character
+            {
+                public int Health { get; private set; }
+
+                public Character()
+                {
+                    Health = 100;
+                }
+
+                public virtual void GetDamage(int damage)
+                {
+                    Health -= damage;
+                    if (Health < 1)
+                    {
+
+                    }
+                }
+                public void SetDamage(Character character, int damage)
+                {
+                    character.GetDamage(damage);
+                }
+            }
+
+            public class Igor : Character
+            {
+                public override void GetDamage(int damage)
+                {
+
+                    base.GetDamage(damage);
+                }
+            }
+
+            public class enemy : Character
+            {
+                public override void GetDamage(int damage)
+                {
+
+                    base.GetDamage(damage);
                 }
             }
         }

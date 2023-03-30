@@ -12,8 +12,8 @@ namespace Program
         public static void Rand(char[,] world)
         {
             Console.CursorVisible = false;
-            int height = world.GetLength(0); //min = 15
-            int width = world.GetLength(1); //min = 50
+            int height = world.GetLength(0);
+            int width = world.GetLength(1);
             Random rnd = new Random();
 
             //draw WORLD with
@@ -75,6 +75,7 @@ namespace Program
                     world[1 + j, 1 + f] = ' ';
                     world[1 + f, width/7] = ' ';
                     world[height/2 + j, width/2+f] = ' ';
+                    world[height-1, width-4] = '+';
                 }
             }
             
@@ -156,47 +157,35 @@ namespace Program
                     choice = Convert.ToInt32(Console.ReadLine());
                 }
 
-                if (choice == 1)
-                {
-                    Console.WriteLine("\nYou choice is Person number 1\n");
-                }
-
-                if (choice == 2)
-                {
-                    Console.WriteLine("\nYour choice is Person number 2\n");
-                }
-
                 Thread.Sleep(500);
-                int number1 = 0;
-                while (number1 != 3)
-                {
-                    Console.WriteLine("If you are ready push number 3\n");
-                    number1 = Convert.ToInt32(Console.ReadLine());
-                }
-
-                if (number1 == 3)
-                {
-                    Console.Clear();
-                    char[] load = new char[52]{'[','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.',']'};
-                    for (int i = 0; i < 50; i++)
-                    {
-                        Console.Clear();
-                        Console.WriteLine();
-                        if(i%2 == 0)
-                            Console.WriteLine("                       Loading..\n");
-                        else
-                            Console.WriteLine("                       Loading...\n");
-                        Console.WriteLine($"                         {i*2+2}%");
-                        load[i+1] = '#';
-                        for (int o = 0; o < 52; o++)
-                        {
-                            Console.Write(load[o]);
-                        }
-
-                        Thread.Sleep(150);
+                Console.Clear(); 
+                char[] load = new char[52]{'[','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.',']'}; 
+                for (int i = 0; i < 50; i++) 
+                { 
+                    Console.Clear(); 
+                    Console.WriteLine(); 
+                    if(i%2 == 0) 
+                        Console.WriteLine("                   Loading map..\n");
+                    else 
+                        Console.WriteLine("                   Loading map....\n");
+                    Console.WriteLine($"                         {i*2+2}%"); 
+                    load[i+1] = '#'; 
+                    for (int o = 0; o < 52; o++) 
+                    { 
+                        Console.Write(load[o]);
                     }
-                    Console.Clear();
-                }
+                    if (choice == 1)
+                    {
+                        Console.WriteLine("\n\nYou choice is Person number 1\n");
+                    }
+
+                    if (choice == 2)
+                    {
+                        Console.WriteLine("\n\nYour choice is Person number 2\n");
+                    }
+                    Thread.Sleep(150);
+                } 
+                Console.Clear();
             }
         }
 
@@ -228,7 +217,6 @@ namespace Program
                             {
                                 userY--;
                             }
-
                             break;
                         case ConsoleKey.DownArrow:
                             if (world[userY+1, userX] != '#' && world[userY+1, userX] != '┃' && world[userY+1, userX] != '━' && world[userY+1, userX] != '┏' && world[userY+1, userX] != '┛' && world[userY+1, userX] != '┗' && world[userY+1, userX] != '┓')
@@ -236,20 +224,25 @@ namespace Program
                                 userY++;
                             }
 
+                            if (world[userY, userX] == '+')
+                            {
+                                Console.Clear();
+                                Console.WriteLine("\n\n\n\n\n\t\t\t\tУРОВЕНЬ ПРОЙДЕН!");
+                                return;
+                            }
+                                
                             break;
                         case ConsoleKey.LeftArrow:
                             if (world[userY, userX-1] != '#' && world[userY, userX-1] != '┃' && world[userY, userX-1] != '━' && world[userY, userX-1] != '┏' && world[userY, userX-1] != '┛' && world[userY, userX-1] != '┗' && world[userY, userX-1] != '┓')
                             {
                                 userX--;
                             }
-
                             break;
                         case ConsoleKey.RightArrow:
                             if (world[userY, userX+1] != '#' && world[userY, userX+1] != '┃' && world[userY, userX+1] != '━' && world[userY, userX+1] != '┏' && world[userY, userX+1] != '┛' && world[userY, userX+1] != '┗' && world[userY, userX+1] != '┓')
                             {
                                 userX++;
                             }
-
                             break;
                     }
 

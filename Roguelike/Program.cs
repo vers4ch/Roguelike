@@ -75,6 +75,7 @@ namespace Program
                     world[1 + j, 1 + f] = ' ';
                     world[1 + f, width / 7] = ' ';
                     world[height / 2 + j, width / 2 + f] = ' ';
+                    world[height-1, width-4] = '+';
                 }
             }
 
@@ -218,7 +219,6 @@ namespace Program
         {
             public static void Moves(char[,] world)
             {
-                // Console.OutputEncoding = System.Text.Encoding.Unicode;
                 string smile = "♕";
                 char hearts = '❤';
                 Console.CursorVisible = false;
@@ -226,10 +226,17 @@ namespace Program
                 int userX = 8;
                 int userY = 5;
                 char[] heart = new char[1];
-                string[] bBar = new String[world.GetLength(1)];
 
                 while (true)
                 {
+                    
+                    if (_Health < 1)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\n\n\n\t\t\tYou die!!");
+                        return;
+                    }
+                    
                     for (int i = 0; i < world.GetLength(0); i++)
                     {
                         for (int j = 0; j < world.GetLength(1); j++)
@@ -245,7 +252,6 @@ namespace Program
 
 
                     Console.SetCursorPosition(1, 1);
-                    Console.Write("Heart:" + hearts);
                     for (int k = 0; k < heart.Length; k++)
                     {
                         Console.Write(heart[k] + " ");
@@ -304,40 +310,34 @@ namespace Program
                         world[userY, userX] = ' ';
                     }
 
-                    if (world[userY, userX] == '@' || world[userY+1, userX] == '@'|| world[userY-1, userX] == '@'||world[userY, userX+1] == '@'||world[userY, userX-1] == '@')
+                    if (world[userY, userX] == '@')
                     {
-                        _Gold++;
+                        world[userY, userX] = ' ';
+                        Guess.Gener(world, userY, userX);
+                    }
+                    if (world[userY+1, userX] == '+')
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\n\n\n\n\n\t\t\t\tУРОВЕНЬ ПРОЙДЕН!");
+                        return;
                     }
                     
-
                     if (world[userY, userX] == hearts)
                     {
                         world[userY, userX] = ' ';
-
                         _Health += 25;
-
-                        char[] listHeart = new char[heart.Length + 1];
-                        for (int i = 0; i < heart.Length; i++)
-                        {
-                            listHeart[i] = heart[i];
-                        }
-
-                        listHeart[listHeart.Length - 1] = '❤';
-                        heart = listHeart;
-                        
                     }
                     Console.Clear();
                 }
             }
-            public static class guess1
+            public static class Guess
             {
-                public static void Gener()
+                public static void Gener(char[,] world, int cordY, int cordX)
                 {
+                    Console.Clear();
                     int height = 22; //min = 15
                     int width = 80; //min = 50
-
                     string[,] gues = new string[height, width];
-
                     //draw
                     for (int y = 0; y < height; y++)
                     {
@@ -347,7 +347,7 @@ namespace Program
                             string text2 = "Choose an action";
                             string text3 = "a) 'Ударить'";
                             string text4 = "b) 'Убить'";
-                            string text5 = "c) 'Задать вопрос'";
+                            string text5 = "c) 'Отступить'";
 
                             if (y == 3 && x == width / 2 - text1.Length / 2)
                                 gues[y, x] = text1;
@@ -386,6 +386,8 @@ namespace Program
                             }
                         }
                     }
+                    
+                    _Health -= 25;
 
                     //printing
                     for (int i = 0; i < height; i++)
@@ -395,9 +397,14 @@ namespace Program
                             Console.Write(gues[i, t]);
                         }
                         Console.WriteLine();
+                    } 
+                    
+                    string press = Console.ReadLine();
+                    
+                    if (press == "c" || press == "C")
+                    {
+                        world[cordY, cordX] = '@';
                     }
-                    string one = Console.ReadLine(); // ДАЛЬШЕ ЕСЛИ ИГРОК ВЫБРАЛ А или Б или С , то сносится столько-то урона
-                                                     // НАВЕРНО НЕ СТОИТ ИСПОЛЬЗОВАТЬ ReadKey, чтоб игрок случайно не ошибся с выбором
                 }
 
             }
@@ -405,62 +412,12 @@ namespace Program
             {
                 public static void Main(string[] args)
                 {
-                    // Console.OutputEncoding = System.Text.Encoding.Unicode;
                     char[,] world = new char[45, 170];
                     startGame.start();
                     ChoicePerson.Person();
                     Map.Rand(world);
                     Moves(world);
-                    guess1.Gener();
-
-                    Igor Igor = new Igor();
-                    enemy enemy = new enemy();
-
-                    enemy.SetDamage(Igor, 25);
-                    Igor.SetDamage(enemy, 100);
-                    
                     Console.ReadKey();
-                }
-            }
-            public abstract class Character
-            {
-                public int Health { get; private set; }
-
-                public Character()
-                {
-                    Health = 100;
-                }
-
-                public virtual void GetDamage(int damage)
-                {
-                    Health -= damage;
-                    if (Health < 1)
-                    {
-                        Console.WriteLine("you die");
-                        
-                    }
-                }
-                public void SetDamage(Character character, int damage)
-                {
-                    character.GetDamage(damage);
-                }
-            }
-
-            public class Igor : Character
-            {
-                public override void GetDamage(int damage)
-                {
-
-                    base.GetDamage(damage);
-                }
-            }
-
-            public class enemy : Character
-            {
-                public override void GetDamage(int damage)
-                {
-
-                    base.GetDamage(damage);
                 }
             }
         }

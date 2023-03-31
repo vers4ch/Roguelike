@@ -3,6 +3,7 @@
 //  Created by Versach on 19.03.2023.
 //
 using System;
+using System.ComponentModel.Design;
 using System.Threading;
 
 namespace Program
@@ -103,7 +104,7 @@ namespace Program
                     world[cordY, cordX] = '@';
                 }
             }
-            int money = rnd.Next(3, 5);
+            int money = rnd.Next(7, 12);
             for (int o = 0; o < money; o++)
             {
                 cordX = rnd.Next(1, width - 1);
@@ -152,9 +153,6 @@ namespace Program
         {
             Console.WriteLine($"{name} , {_Health}HP");
         }
-
-        
-
         public static class ChoicePerson
         {
             public static void Person()
@@ -196,19 +194,20 @@ namespace Program
                     for (int i = 0; i < 50; i++)
                     {
                         Console.Clear();
-                        Console.WriteLine();
+                        Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                         if (i % 2 == 0)
-                            Console.WriteLine("                       Loading..\n");
+                            Console.WriteLine("\t\t\t\t\t\t                       Loading..\n");
                         else
-                            Console.WriteLine("                       Loading...\n");
-                        Console.WriteLine($"                         {i * 2 + 2}%");
+                            Console.WriteLine("\t\t\t\t\t\t                       Loading...\n");
+                        Console.WriteLine($"\t\t\t\t\t\t                         {i * 2 + 2}%");
                         load[i + 1] = '#';
+                        Console.Write("\t\t\t\t\t\t");
                         for (int o = 0; o < 52; o++)
                         {
                             Console.Write(load[o]);
                         }
 
-                        Thread.Sleep(150);
+                        Thread.Sleep(75);
                     }
                     Console.Clear();
                 }
@@ -219,37 +218,94 @@ namespace Program
         {
             public static void Moves(char[,] world)
             {
-                string smile = "♕";
+                char[,] worldNew = new char[world.GetLength(0), world.GetLength(1)];
+                // string smile = "♕";
+                char smile = '♕';
                 char hearts = '❤';
                 Console.CursorVisible = false;
                 Console.SetCursorPosition(0, 0);
                 int userX = 8;
                 int userY = 5;
                 char[] heart = new char[1];
+                ///writing NEW_SECOND_ARRAY
+                for (int o = 0; o < world.GetLength(0); o++)
+                {
+                    for (int h = 0; h < world.GetLength(1); h++)
+                    {
+                        worldNew[o, h] = 'l';
+                    }
+                }
 
                 while (true)
                 {
-                    
                     if (_Health < 1)
                     {
-                        Console.Clear();
-                        Console.WriteLine("\n\n\n\t\t\tYou die!!");
-                        return;
+                        //Console.Clear();
+                        Console.WriteLine("\n\n\n\t\t\tYou die!! \n\n\n\t\t\ta)Exit         b)Restart");
+                        string ex = Console.ReadLine();
+
+                        switch (ex)
+                        {
+                            case "a":
+                                return;
+                            case "b":
+                                Console.Clear();
+                                Map.Rand(world);
+                                _Health = 100;
+                                _Gold = 0;
+                                break;
+                        }
                     }
                     
                     for (int i = 0; i < world.GetLength(0); i++)
                     {
                         for (int j = 0; j < world.GetLength(1); j++)
                         {
-                            Console.Write(world[i, j]);
+                            
+                            Console.SetCursorPosition(j, i);
+                            
+                            if (world[i, j] == '❤' && world[i, j] != worldNew[i, j])
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '$'&& world[i, j] != worldNew[i, j])
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '@'&& world[i, j] != worldNew[i, j])
+                            {
+                                Console.ForegroundColor = ConsoleColor.Magenta;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '#'&& world[i, j] != worldNew[i, j])
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if(world[i, j] != worldNew[i, j])
+                            {
+                                Console.Write(world[i, j]);
+                            }
+                            else if(worldNew[i, j] == smile)
+                                Console.Write(' ');
                         }
 
                         Console.WriteLine();
                     }
-
-                    Console.WriteLine($"HP: {_Health}     Gold: {_Gold}");
-
-
+                    
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"HP: {_Health}     ");
+                    Console.ResetColor();
+                    
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write($"Gold: {_Gold}");
+                    Console.ResetColor();
 
                     Console.SetCursorPosition(1, 1);
                     for (int k = 0; k < heart.Length; k++)
@@ -258,6 +314,7 @@ namespace Program
                     }
 
                     Console.SetCursorPosition(userX, userY);
+                    world[userY, userX] = smile;
                     Console.Write(smile);
                     ConsoleKeyInfo moveKey = Console.ReadKey();
                     switch (moveKey.Key)
@@ -314,6 +371,7 @@ namespace Program
                     {
                         world[userY, userX] = ' ';
                         Guess.Gener(world, userY, userX);
+                        // Console.Clear();
                     }
                     if (world[userY+1, userX] == '+')
                     {
@@ -327,7 +385,14 @@ namespace Program
                         world[userY, userX] = ' ';
                         _Health += 25;
                     }
-                    Console.Clear();
+                    ///writing NEW_SECOND_ARRAY
+                    for (int o = 0; o < world.GetLength(0); o++)
+                    {
+                        for (int h = 0; h < world.GetLength(1); h++)
+                        {
+                            worldNew[o, h] = world[o, h];
+                        }
+                    }
                 }
             }
             public static class Guess
@@ -405,6 +470,48 @@ namespace Program
                     {
                         world[cordY, cordX] = '@';
                     }
+                    
+                    Console.Clear();
+                    
+                    for (int i = 0; i < world.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < world.GetLength(1); j++)
+                        {
+                            
+                            Console.SetCursorPosition(j, i);
+                            
+                            if (world[i, j] == '❤')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '$')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '@')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Magenta;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '#')
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.Write(world[i, j]);
+                            }
+                        }
+
+                        Console.WriteLine();
+                    }
                 }
 
             }
@@ -412,12 +519,25 @@ namespace Program
             {
                 public static void Main(string[] args)
                 {
-                    char[,] world = new char[45, 170];
-                    startGame.start();
-                    ChoicePerson.Person();
-                    Map.Rand(world);
-                    Moves(world);
-                    Console.ReadKey();
+                    while (true)
+                    {
+                        char[,] world = new char[45, 170];
+                        startGame.start();
+                        ChoicePerson.Person();
+                        Map.Rand(world);
+                        Moves(world);
+                        Console.WriteLine("\n\n\n\t\tНажмите <ENTER>, чтобы продолжить. <Q>, чтобы выйти.");
+                        ConsoleKeyInfo exit = Console.ReadKey();
+                        switch (exit.Key)
+                        {
+                            case ConsoleKey.Q:
+                                Console.Clear();
+                                Environment.Exit(0);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         }

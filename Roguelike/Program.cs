@@ -11,7 +11,7 @@ namespace Program
         public static void Rand(char[,] world)
         {
             Console.CursorVisible = false;
-            int height = world.GetLength(0); //min = 15
+            int height = world.GetLength(0) - 1; //min = 15
             int width = world.GetLength(1); //min = 50
             Random rnd = new Random();
 
@@ -128,7 +128,12 @@ namespace Program
                 else
                     world[cordY, cordX] = '$';
             }
-
+            //boss
+            int boss = world[43, 166];
+            if (world[43, 166] == '@' || world[43, 166] == '#' || world[43, 166] == '@' || world[43, 166] == '$')
+                item++;
+            else
+                world[43, 166] = '&';
         }
     }
     public static class startGame
@@ -212,13 +217,13 @@ namespace Program
 
                 if (choice == 1)
                 {
-                    Igor = new Igor("1 - Игорь", 200, 25);
+                    Igor = new Igor("1 - Игорь", 50, 200);
                     Console.WriteLine("\nYou choice is Person number 1\n");
                 }
 
                 if (choice == 2)
                 {
-                    Roma = new Roma("2 - Рома", 1500, 200);
+                    Roma = new Roma("2 - Рома", 250, 50);
                     Console.WriteLine("\nYour choice is Person number 2\n");
                 }
 
@@ -425,13 +430,31 @@ namespace Program
                         _Mana += 50;
                     }
 
-                    if (world[userY, userX] == '@')
+                    if (world[userY - 1, userX] == '@')
                     {
-                        world[userY, userX] = ' ';
+                        world[userY - 1, userX] = ' ';
                         Guess.Gener(world, userY, userX);
-                       
                     }
-                    if (world[userY + 1, userX] == '+')
+                    
+                    if (world[userY, userX - 1] == '@')
+                    {
+                        world[userY, userX - 1] = ' ';
+                        Guess.Gener(world, userY, userX);
+                    }
+                   
+                    if (world[userY, userX + 1] == '@')
+                    {
+                        world[userY, userX + 1] = ' ';
+                        Guess.Gener(world, userY, userX);
+                    }
+
+                    if (world[userY + 1, userX] == '@')
+                    {
+                        world[userY + 1, userX] = ' ';
+                        Guess.Gener(world, userY, userX);
+                    }
+
+                        if (world[userY, userX] == '+')
                     {
                         Console.Clear();
                         Console.WriteLine("\n\n\n\n\n\t\t\t\tУРОВЕНЬ ПРОЙДЕН!");
@@ -687,7 +710,7 @@ namespace Program
                 {
                     while (true)
                     {
-                        char[,] world = new char[45, 170];
+                        char[,] world = new char[46, 170];
                         startGame.start();
                         ChoicePerson.Person();
                         Map.Rand(world);

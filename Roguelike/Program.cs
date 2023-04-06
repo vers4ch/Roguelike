@@ -1,3 +1,4 @@
+using Microsoft.SqlServer.Server;
 using System;
 using System.ComponentModel.Design;
 using System.Threading;
@@ -118,7 +119,7 @@ namespace Program
             }
             
             //money
-            int money = rnd.Next(7, 12);
+            int money = rnd.Next(9, 12);
             for (int o = 0; o < money; o++)
             {
                 cordX = rnd.Next(1, width - 1);
@@ -133,7 +134,7 @@ namespace Program
             if (world[43, 166] == '@' || world[43, 166] == '#' || world[43, 166] == '@' || world[43, 166] == '$')
                 item++;
             else
-                world[43, 166] = '&';
+                world[43, 166] = '☠';
         }
     }
     public static class startGame
@@ -141,7 +142,16 @@ namespace Program
         public static void start()
         {
             Console.Clear();
-            Console.WriteLine("\nChoice:\n1.Play\n2.Exit");
+            string ch = "Choice:";
+            string ch1 = "1.Play";
+            string ch2 = "2.Exit";
+            Console.SetCursorPosition((Console.WindowWidth - ch.Length) / 1/2, Console.CursorTop);
+            Console.WriteLine(ch);
+            Console.SetCursorPosition((Console.WindowWidth - ch1.Length) / 1/2, Console.CursorTop);
+            Console.WriteLine(ch1);
+            Console.SetCursorPosition((Console.WindowWidth - ch2.Length) / 1/2, Console.CursorTop);
+            Console.WriteLine(ch2);
+
             int number;
             number = Convert.ToInt32(Console.ReadLine());
             if (number == 1)
@@ -161,7 +171,7 @@ namespace Program
         public string name;
         public static int _Health;
         public static int _Mana;
-        public static int _Gold = 0;
+        public static int _Gold = 1500;
 
         public Person(string name, int Health, int mana)
         {
@@ -171,7 +181,9 @@ namespace Program
         }
         public virtual void PrintPerson()
         {
-            Console.WriteLine($"{name} , {_Health}HP , {_Mana}%");
+            string ss = $"{name} , {_Health}HP , {_Mana}%";
+            Console.SetCursorPosition((Console.WindowWidth - ss.Length) / 2, Console.CursorTop);
+            Console.WriteLine(ss);
         }
         public class Igor : Person
         {
@@ -182,7 +194,9 @@ namespace Program
             }
             public override void PrintPerson()
             {
-                Console.WriteLine($"{name} , {_Health}HP , {_Mana}%");
+                string ss = $"{name} , {_Health}HP , {_Mana}%";
+                Console.SetCursorPosition((Console.WindowWidth - ss.Length) / 2, Console.CursorTop);
+                Console.WriteLine(ss);
             }
         }
         public class Roma : Person
@@ -194,7 +208,9 @@ namespace Program
             }
             public override void PrintPerson()
             {
-                Console.WriteLine($"{name} , {_Health}HP , {_Mana}%");
+                string ss = $"{name} , {_Health}HP , {_Mana}%";
+                Console.SetCursorPosition((Console.WindowWidth - ss.Length) / 2, Console.CursorTop);
+                Console.WriteLine(ss);
             }
         }
     
@@ -208,48 +224,58 @@ namespace Program
                 Roma Roma = new Roma("2 - Рома", 250, 50);
                 Roma.PrintPerson();
                 int choice = 0;
+                string s1 = "Choice your person";
+                string s2 = "You choice is Person number 1\n";
+                string choice1 = "Your choice is Person number 2\n";
 
                 while (choice != 1 && choice != 2)
                 {
-                    Console.Write("\nChoice your person: ");
+                    Console.SetCursorPosition((Console.WindowWidth - s1.Length) / 2, Console.CursorTop);
+                    Console.WriteLine(s1);
                     choice = Convert.ToInt32(Console.ReadLine());
                 }
 
                 if (choice == 1)
                 {
                     Igor = new Igor("1 - Игорь", 50, 200);
-                    Console.WriteLine("\nYou choice is Person number 1\n");
+                    Console.SetCursorPosition((Console.WindowWidth - s2.Length) / 2, Console.CursorTop);
+                    Console.WriteLine(s2);
                 }
 
                 if (choice == 2)
                 {
                     Roma = new Roma("2 - Рома", 250, 50);
-                    Console.WriteLine("\nYour choice is Person number 2\n");
+                    Console.SetCursorPosition((Console.WindowWidth - choice1.Length) / 2, Console.CursorTop);
+                    Console.WriteLine(choice1);
+
                 }
 
                 Thread.Sleep(500);
                 int number1 = 0;
+                string s = "If you are ready push number 3";
                 while (number1 != 3)
                 {
-                    Console.WriteLine("If you are ready push number 3\n");
+                    Console.SetCursorPosition((Console.WindowWidth - s.Length) / 2, Console.CursorTop);
+                    Console.WriteLine(s);
                     number1 = Convert.ToInt32(Console.ReadLine());
                 }
 
                 if (number1 == 3)
                 {
                     Console.Clear();
-                    char[] load = new char[52] { '[', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', ']' };
+                    char[] load = new char[52] {                         '[', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', ']' };
+
                     for (int i = 0; i < 50; i++)
                     {
                         Console.Clear();
-                        Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                        Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                         if (i % 2 == 0)
-                            Console.WriteLine("\t\t\t\t\t\t                       Loading..\n");
+                            Console.WriteLine("\t\t\t\t\t\t\t\t\t\t                       Loading..\n");
                         else
-                            Console.WriteLine("\t\t\t\t\t\t                       Loading...\n");
-                        Console.WriteLine($"\t\t\t\t\t\t                         {i * 2 + 2}%");
+                            Console.WriteLine("\t\t\t\t\t\t\t\t\t\t                       Loading...\n");
+                        Console.WriteLine($"\t\t\t\t\t\t                                                          {i * 2 + 2}%");
                         load[i + 1] = '#';
-                        Console.Write("\t\t\t\t\t\t");
+                        Console.Write("\t\t\t\t\t\t\t\t\t\t");
                         for (int o = 0; o < 52; o++)
                         {
                             Console.Write(load[o]);
@@ -273,7 +299,6 @@ namespace Program
                 Console.SetCursorPosition(0, 0);
                 int userX = 8;
                 int userY = 5;
-                char[] heart = new char[1];
                 ///writing NEW_SECOND_ARRAY
                 for (int o = 0; o < world.GetLength(0); o++)
                 {
@@ -287,20 +312,42 @@ namespace Program
                 {
                     if (_Health < 1)
                     {
-                        //Console.Clear();
-                        Console.WriteLine("\n\n\n\t\t\tYou die!! \n\n\n\t\t\ta)Exit         b)Restart");
+                        Console.Clear();
+                        string ss = "You die!!";
+                        string sss = "a)Exit";
+                        string ssss = "b)Restart";
+                        Console.SetCursorPosition((Console.WindowWidth - ss.Length) / 2, Console.CursorTop);
+                        Console.WriteLine(ss);
+                        Console.SetCursorPosition((Console.WindowWidth - sss.Length) / 2, Console.CursorTop);
+                        Console.WriteLine(sss);
+                        Console.SetCursorPosition((Console.WindowWidth - ssss.Length) / 2, Console.CursorTop);
+                        Console.WriteLine(ssss);
                         string ex = Console.ReadLine();
 
                         switch (ex)
                         {
                             case "a":
-                                return;
-                            case "b":
-                                Console.Clear();
-                                Map.Rand(world);
-                                _Health = 100;
-                                _Gold = 0;
+                                Environment.Exit(0);
                                 break;
+                            case "b":
+                                while (true)
+                                {
+                                    startGame.start();
+                                    ChoicePerson.Person();
+                                    Map.Rand(world);
+                                    Moves(world);
+                                    Console.WriteLine("\n\n\n\t\tНажмите <ENTER>, чтобы продолжить. <Q>, чтобы выйти.");
+                                    ConsoleKeyInfo exit = Console.ReadKey();
+                                    switch (exit.Key)
+                                    {
+                                        case ConsoleKey.Q:
+                                            Console.Clear();
+                                            Environment.Exit(0);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
                         }
                     }
                     
@@ -341,6 +388,12 @@ namespace Program
                                 Console.Write(world[i, j]);
                                 Console.ResetColor();
                             }
+                            else if (world[i, j] == '☠' && world[i, j] != worldNew[i, j])
+                            {
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
                             else if (world[i, j] != worldNew[i, j])
                             {
                                 Console.Write(world[i, j]);
@@ -364,11 +417,6 @@ namespace Program
                     Console.Write($"Mana: {_Mana}");
                     Console.ResetColor();
 
-                    Console.SetCursorPosition(1, 1);
-                    for (int k = 0; k < heart.Length; k++)
-                    {
-                        Console.Write(heart[k] + " ");
-                    }
 
                     Console.SetCursorPosition(userX, userY);
                     world[userY, userX] = smile;
@@ -420,7 +468,7 @@ namespace Program
 
                     if (world[userY, userX] == '$')
                     {
-                        _Gold++;
+                        _Gold += 100;
                         world[userY, userX] = ' ';
                     }
 
@@ -435,7 +483,13 @@ namespace Program
                         world[userY - 1, userX] = ' ';
                         Guess.Gener(world, userY, userX);
                     }
-                    
+
+                    if (world[userY, userX] == '@')
+                    {
+                        world[userY, userX] = ' ';
+                        Guess.Gener(world, userY, userX);
+                    }
+
                     if (world[userY, userX - 1] == '@')
                     {
                         world[userY, userX - 1] = ' ';
@@ -454,10 +508,37 @@ namespace Program
                         Guess.Gener(world, userY, userX);
                     }
 
-                        if (world[userY, userX] == '+')
+                    if (world[userY - 1, userX] == '☠')
+                    {
+                        world[userY - 1, userX] = ' ';
+                        Guess1.Gener(world, userY, userX);
+                    }
+
+                    if (world[userY, userX - 1] == '☠')
+                    {
+                        world[userY, userX - 1] = ' ';
+                        Guess1.Gener(world, userY, userX);
+                    }
+
+                    if (world[userY, userX + 1] == '☠')
+                    {
+                        world[userY, userX + 1] = ' ';
+                        Guess1.Gener(world, userY, userX);
+                    }
+
+                    if (world[userY + 1, userX] == '☠')
+                    {
+                        world[userY + 1, userX] = ' ';
+                        Guess1.Gener(world, userY, userX);
+                    }
+
+
+                    if (world[userY, userX] == '+')
                     {
                         Console.Clear();
-                        Console.WriteLine("\n\n\n\n\n\t\t\t\tУРОВЕНЬ ПРОЙДЕН!");
+                        string ss = "УРОВЕНЬ ПРОЙДЕН!";
+                        Console.SetCursorPosition((Console.WindowWidth - ss.Length) / 2, Console.CursorTop);
+                        Console.WriteLine(ss);
                         return;
                     }
 
@@ -493,8 +574,8 @@ namespace Program
                             {
                                 string text1 = "You have met the enemy";
                                 string text2 = "Choose an action";
-                                string text3 = "a) 'Ударить'";
-                                string text4 = "b) 'Убить'";
+                                string text3 = "          a) 'Ударить'";
+                                string text4 = "            b) 'Убить'";
 
                                 if (y == 3 && x == width / 2 - text1.Length / 2)
                                     gues[y, x] = text1;
@@ -541,7 +622,7 @@ namespace Program
                                 string nexttext = "you have met the enemy";
                                 string nexttext1 = "choose an action";
                                 string nexttext2 = "not enough mana to fight the enemy";
-                                string nexttext3 = "с) 'Отступить'";
+                                string nexttext3 = "            с) 'Отступить'";
 
                                 if (y == 3 && x == width / 2 - nexttext.Length / 2)
                                     gues[y, x] = nexttext;
@@ -588,7 +669,7 @@ namespace Program
                                 string nexttext = "you have met the enemy";
                                 string nexttext1 = "choose an action";
                                 string nexttext2 = "You only have enough mana to hit";
-                                string nexttext3 = "a) 'Ударить'";
+                                string nexttext3 = "                    a) 'Ударить'";
 
                                 if (y == 3 && x == width / 2 - nexttext.Length / 2)
                                     gues[y, x] = nexttext;
@@ -626,9 +707,9 @@ namespace Program
                             }
                         }
                     }
-
-                            //printing
-                            for (int i = 0; i < height; i++)
+                   
+                    //printing
+                    for (int i = 0; i < height; i++)
                     {
                         for (int t = 0; t < width; t++)
                         {
@@ -641,17 +722,19 @@ namespace Program
 
                     if (press == "c" || press == "C")
                     {
-                        world[cordY, cordX] = '@';
+                        world[cordY - 1, cordX] = '@';
                         _Health -= 25;
                     }
                     else if(press == "b" || press == "B")
                     {
                         _Mana -= 50;
+                        _Gold += 50;
                     }
                     else if (press == "a" || press == "A")
                     {
                         _Health -= 10;
                         _Mana -= 25;
+                        _Gold += 10;
                     }
 
                     Console.Clear();
@@ -704,6 +787,182 @@ namespace Program
                 }
 
             }
+            public static class Guess1
+            {
+                public static void Gener(char[,] world, int cordY, int cordX)
+                {
+                    Console.Clear();
+                    int height = 22; //min = 15
+                    int width = 80; //min = 50
+                    string[,] gues = new string[height, width];
+                    //draw
+                    
+                    if (_Gold < 1500)
+                    {
+                        for (int y = 0; y < height; y++)
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                string text = "This is the Keeper of the Gate";
+                                string text2 = "You don't have enough gold";
+                                string text3 = "to go further";
+                                string text4 = "h) 'идти собирать золото'";
+
+                                if (y == 3 && x == width / 2 - text.Length / 2)
+                                    gues[y, x] = text;
+                                else if (y == 5 && x == width / 2 - text2.Length / 2)
+                                    gues[y, x] = text2;
+                                else if (y == 10 && x == width / 2 - text3.Length / 2)
+                                    gues[y, x] = text3;
+                                else if (y == 15 && x == 20)
+                                    gues[y, x] = text4;
+                                else if (x == width - 1 && y > 0 && y < height - 1 && y == 3)
+                                    gues[y, x - text.Length + 1] = "┃";
+                                else if (x == width - 1 && y > 0 && y < height - 1 && y == 5)
+                                    gues[y, x - text.Length + 5] = "┃";
+                                else if (x == width - 1 && y > 0 && y < height - 1 && y == 10)
+                                    gues[y, x - text2.Length + 14] = "┃";
+                                else if (x == width - 1 && y > 0 && y < height - 1 && y == 15)
+                                    gues[y, x - text3.Length - 11] = "┃";
+                                else if (x == 0 && y > 0 && y < height - 1 || x == width - 1 && y > 0 && y < height - 1 && y != 3 && y != 10 && y != 15)
+                                    gues[y, x] = "┃";
+                                else if (y == 0 && x > 0 && x < width - 1 || y == height - 1 && x > 0 && x < width - 1)
+                                    gues[y, x] = "━";
+                                else if (x == 0 && y == 0)
+                                    gues[y, x] = "┏";
+                                else if (x == width - 1 && y == height - 1)
+                                    gues[y, x] = "┛";
+                                else if (x == 0 && y == height - 1)
+                                    gues[y, x] = "┗";
+                                else if (x == width - 1 && y == 0)
+                                    gues[y, x] = "┓";
+
+                                else
+                                {
+                                    gues[y, x] = " ";
+                                }
+                            }
+                        }
+                    }
+                    if(_Gold >= 1500)
+                    {
+                        for (int y = 0; y < height; y++)
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                string text = "This is the Keeper of the Gate";
+                                string text2 = "You have enough gold";
+                                string text3 = "you need pay 1500";
+                                string text4 = "u) 'заплатить'";
+
+                                if (y == 3 && x == width / 2 - text.Length / 2)
+                                    gues[y, x] = text;
+                                else if (y == 5 && x == width / 2 - text2.Length / 2)
+                                    gues[y, x] = text2;
+                                else if (y == 10 && x == width / 2 - text3.Length / 2)
+                                    gues[y, x] = text3;
+                                else if (y == 15 && x == 20)
+                                    gues[y, x] = text4;
+                                else if (x == width - 1 && y > 0 && y < height - 1 && y == 3)
+                                    gues[y, x - text.Length + 1] = "┃";
+                                else if (x == width - 1 && y > 0 && y < height - 1 && y == 5)
+                                    gues[y, x - text.Length + 11] = "┃";
+                                else if (x == width - 1 && y > 0 && y < height - 1 && y == 10)
+                                    gues[y, x - text2.Length + 4] = "┃";
+                                else if (x == width - 1 && y > 0 && y < height - 1 && y == 15)
+                                    gues[y, x - (text3.Length -4)] = "┃";
+                                else if (x == 0 && y > 0 && y < height - 1 || x == width - 1 && y > 0 && y < height - 1 && y != 3 && y != 10 && y != 15)
+                                    gues[y, x] = "┃";
+                                else if (y == 0 && x > 0 && x < width - 1 || y == height - 1 && x > 0 && x < width - 1)
+                                    gues[y, x] = "━";
+                                else if (x == 0 && y == 0)
+                                    gues[y, x] = "┏";
+                                else if (x == width - 1 && y == height - 1)
+                                    gues[y, x] = "┛";
+                                else if (x == 0 && y == height - 1)
+                                    gues[y, x] = "┗";
+                                else if (x == width - 1 && y == 0)
+                                    gues[y, x] = "┓";
+
+                                else
+                                {
+                                    gues[y, x] = " ";
+                                }
+                            }
+                        }
+                    }
+
+                    //printing
+                    for (int i = 0; i < height; i++)
+                    {
+                        for (int t = 0; t < width; t++)
+                        {
+                            Console.Write(gues[i, t]);
+                        }
+                        Console.WriteLine();
+                    }
+
+                    string press = Console.ReadLine();
+
+                    if (press == "h" || press == "H")
+                    {
+                        world[43, 166] = '☠';
+                    }
+
+                    if(press == "u" || press == "U")
+                    {
+                        world[43, 166] = ' ';
+                        _Gold -= 1500;
+                    }
+
+                    for (int i = 0; i < world.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < world.GetLength(1); j++)
+                        {
+
+                            Console.SetCursorPosition(j, i);
+
+                            if (world[i, j] == '❤')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == 'Ⰷ')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '$')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '@')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Magenta;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else if (world[i, j] == '#')
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.Write(world[i, j]);
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.Write(world[i, j]);
+                            }
+                        }
+
+                        Console.WriteLine();
+                    }
+                }
+
+            }
             internal class Program
             {
                 public static void Main(string[] args)
@@ -715,7 +974,9 @@ namespace Program
                         ChoicePerson.Person();
                         Map.Rand(world);
                         Moves(world);
-                        Console.WriteLine("\n\n\n\t\tНажмите <ENTER>, чтобы продолжить. <Q>, чтобы выйти.");
+                        string s = "Нажмите <ENTER>, чтобы продолжить. <Q>, чтобы выйти.";
+                        Console.SetCursorPosition((Console.WindowWidth - s.Length) / 2, Console.CursorTop);
+                        Console.WriteLine(s);
                         ConsoleKeyInfo exit = Console.ReadKey();
                         switch (exit.Key)
                         {

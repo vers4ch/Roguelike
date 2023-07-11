@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Threading;
+using System.Media;
+
+
+
 
 namespace Program
 {
@@ -167,7 +171,7 @@ namespace Program
         public string name;
         public static int _Health;
         public static int _Mana;
-        public static int _Gold = 1500;
+        public static int _Gold = 0;
 
         public Person(string name, int Health, int mana)
         {
@@ -964,7 +968,7 @@ namespace Program
                 public static void Main(string[] args)
                 {
                     while (true)
-                    {
+                    { 
                         char[,] world = new char[46, 170];
                         startGame.start();
                         ChoicePerson.Person();
